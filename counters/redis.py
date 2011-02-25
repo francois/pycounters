@@ -1,10 +1,12 @@
-import time
-import re
 import redis
 
-class RedisCounters:
+from counters import BaseCounters
+
+class RedisCounters(BaseCounters):
   def __init__(self, host='localhost', port=6379, db=0, redis=None, rootkey='counters'):
-    self.keyre = re.compile('\A[\w.]+\Z')
+    if hasattr(BaseCounters, '__init__'):
+      BaseCounters.__init__(self)
+
     self.rootkey = rootkey
 
     if redis:
@@ -12,5 +14,5 @@ class RedisCounters:
     else:
       self.redis = redis.Redis(host=host, port=port, db=db)
 
-  def ping(self, key):
-    self.redis.hset("pings.%s" % key, int(time.time()))
+  def do_ping(self, key, at):
+    self.redis.hset("pings.%s" % key, at)

@@ -16,3 +16,7 @@ class RedisCountersTestCase(unittest.TestCase):
     self.redis_mock.hset = Mock(return_value=1)
     self.counter.ping("a.b")
     self.redis_mock.hset.assert_called_with('pings.a.b', int(time.time()))
+
+  def test_ping_raises_exception_when_invalid_key(self):
+    self.redis_mock.hset = Mock(return_value=1)
+    self.assertRaises(ValueError, self.counter.ping, "a/b")

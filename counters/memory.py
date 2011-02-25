@@ -1,13 +1,13 @@
 import time
-import re
 
-class MemoryCounters:
+from counters import BaseCounters
+
+class MemoryCounters(BaseCounters):
   def __init__(self):
-    self.pings = {}
-    self.keyre = re.compile('\A[\w.]+\Z')
+    if hasattr(BaseCounters, '__init__'):
+      BaseCounters.__init__(self)
 
-  def ping(self, key):
-    if re.match(self.keyre, key):
-      self.pings[key] = time.time()
-    else:
-      raise ValueError("Counters keys must only contain letters, numbers, the underscore (_) and fullstop (.), received \"%s\"" % key)
+    self.pings = {}
+
+  def do_ping(self, key, at):
+    self.pings[key] = at
