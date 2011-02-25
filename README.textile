@@ -1,0 +1,41 @@
+h1. PyCounters
+
+A port of "counters":https://github.com/francois/counters to Python.
+
+Easily record system performance counters from anywhere in your codebase. The output from this Python port and the original Ruby version are identical, enabling perfect interoperability between both.
+
+h2. Examples
+
+Record counters in-memory:
+
+<pre><code>from counters import MemoryCounters
+counters = MemoryCounters()
+counters.ping("crawler.alive")
+</code></pre>
+
+Record counters to Redis:
+
+<pre><code>from counters import RedisCounters
+# Use default configuration: host='localhost', port=6379, db=0
+counters = RedisCounters(rootkey='counters')
+
+# Configure Redis yourself:
+rinstance = redis.Redis('192.168.1.1')
+counters = RedisCounters(redis=rinstance, rootkey='counters')
+
+# Use the returned object
+
+counters.ping("crawler.alive")
+counters.hit("crawler.urls.crawled")
+counters.magnitude("crawler.bytes.in", 20912)
+</code></pre>
+
+Since all counters are stored under a single Redis Hash, you should pass the default root you want, although the default of <code>counters</code> should work in most cases.
+
+Records counters to a file:
+
+<pre><code>from counters import FileCounters
+# Either pass a path or an instance of a file object
+counters = FileCounters("path/to/logfile.log")
+counters.latency("crawler.processing", 12) # Expects a number of seconds, possibly float
+</code></pre>
