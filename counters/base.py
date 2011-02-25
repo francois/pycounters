@@ -6,10 +6,10 @@ class BaseCounters:
     self.keyre = re.compile('\A[\w.]+\Z')
 
   def ping(self, key):
-    self.validate(key)
+    self.validate_key(key)
     self.do_ping(key, int(time.time()))
 
-  def validate(self, key):
+  def validate_key(self, key):
     if re.match(self.keyre, key):
       pass
     else:
