@@ -1,7 +1,7 @@
 import unittest
 import time
 
-from counters.memory import MemoryCounters
+from counters import MemoryCounters
 
 class MemoryCountersTestCase(unittest.TestCase):
   def setUp(self):
