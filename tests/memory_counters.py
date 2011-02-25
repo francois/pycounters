@@ -1,7 +1,7 @@
 import unittest
 import time
 
-from counters.memory import MemoryCounters, InvalidKeyException
+from counters.memory import MemoryCounters
 
 class MemoryCountersTestCase(unittest.TestCase):
   def setUp(self):
@@ -13,4 +13,4 @@ class MemoryCountersTestCase(unittest.TestCase):
     self.assertAlmostEquals(now, self.counter.pings["a.b"], 0.01)
 
   def test_ping_raises_exception_when_invalid_key(self):
-    self.assertRaises(InvalidKeyException, self.counter.ping, "a/b")
+    self.assertRaises(ValueError, self.counter.ping, "a/b")

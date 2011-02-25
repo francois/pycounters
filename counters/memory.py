@@ -1,9 +1,6 @@
 import time
 import re
 
-class InvalidKeyException(ValueError):
-  pass
-
 class MemoryCounters:
   def __init__(self):
     self.pings = {}
@@ -13,4 +10,4 @@ class MemoryCounters:
     if re.match(self.keyre, key):
       self.pings[key] = time.time()
     else:
-      raise InvalidKeyException("Counters keys must only contain letters, numbers, the underscore (_) and fullstop (.), received \"%s\"" % key)
+      raise ValueError("Counters keys must only contain letters, numbers, the underscore (_) and fullstop (.), received \"%s\"" % key)
