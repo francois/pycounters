@@ -13,5 +13,8 @@ class RedisCounters(BaseCounters):
     else:
       self.redis = redis.Redis(host='localhost', port=6379, db=0)
 
+  def do_hit(self, key, n):
+    self.redis.hincrby(self.rootkey, "hits.%s" % key, n)
+
   def do_ping(self, key, at):
-    self.redis.hset("pings.%s" % key, at)
+    self.redis.hset(self.rootkey, "pings.%s" % key, at)

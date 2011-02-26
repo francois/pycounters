@@ -9,6 +9,10 @@ class BaseCounters:
     self.validate_key(key)
     self.do_ping(key, int(time.time()))
 
+  def hit(self, key, n=1):
+    self.validate_key(key)
+    self.do_hit(key, n)
+
   def validate_key(self, key):
     if re.match(self.keyre, key):
       pass
